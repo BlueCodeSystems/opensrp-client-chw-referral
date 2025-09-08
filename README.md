@@ -1,5 +1,6 @@
 <!-- JITPACK BADGES:START -->
 [![JitPack Latest](https://jitpack.io/v/BlueCodeSystems/opensrp-client-chw-referral.svg)](https://jitpack.io/#BlueCodeSystems/opensrp-client-chw-referral)
+[![Build for latest tag (v2.0.0)](https://jitpack.io/v/BlueCodeSystems/opensrp-client-chw-referral/v2.0.0.svg)](https://jitpack.io/#BlueCodeSystems/opensrp-client-chw-referral/v2.0.0)
 [![master-SNAPSHOT](https://jitpack.io/v/BlueCodeSystems/opensrp-client-chw-referral/master-SNAPSHOT.svg)](https://jitpack.io/#BlueCodeSystems/opensrp-client-chw-referral/master-SNAPSHOT)
 <!-- JITPACK BADGES:END -->
 
