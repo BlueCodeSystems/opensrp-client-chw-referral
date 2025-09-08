@@ -1,1 +1,24 @@
+pluginManagement {
+  repositories {
+    mavenLocal()
+    google()
+    mavenCentral()
+    gradlePluginPortal()
+  }
+}
+
 include ':sample', ':opensrp-chw-referral'
+
+// Optional: prefer local sibling builds when enabled
+def sibling = { String p -> file(p)?.exists() }
+def useLocalSiblings = (gradle.startParameter.projectProperties['useLocalSiblings'] ?: System.getenv('USE_LOCAL_SIBLINGS'))?.toString()?.toBoolean() ?: false
+
+if (useLocalSiblings && sibling('../opensrp-client-core')) {
+  includeBuild('../opensrp-client-core') {
+    dependencySubstitution {
+      substitute(module('io.github.bluecodesystems:opensrp-client-core')).using(project(':opensrp-core'))
+    }
+  }
+}
+
+// Removed optional neat-form composite include; using JitPack artifact instead
