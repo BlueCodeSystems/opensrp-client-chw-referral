@@ -8,3 +8,11 @@
 
 # opensrp-client-chw-referral
 OpenSRP Client CHW Referral Library Module
+
+## Project Status
+
+- Badges: This README now shows JitPack badges for the latest published version and for `master-SNAPSHOT` at the very top under a managed block. The “Build for latest tag” badge will appear automatically once a Git tag exists.
+- CI: A GitHub Action (`.github/workflows/jitpack-badges.yml`) keeps the badges up to date on every push to `master`, on new tags, and on manual runs. It also primes JitPack for the `master` snapshot to reduce initial “?” latency.
+- Build system: Upgraded to Gradle 8 / AGP 8.6.0 and Kotlin 1.9.24. Target/compile SDK set to 35 and JDK 17 supported (see `jitpack.yml`).
+- Code updates: Internal refactors migrate DI to Koin 3, replace deprecated Android/Kotlin APIs, and adopt ViewBinding in relevant screens.
+- Current branch: `master`. Latest tag: none detected locally; tag-specific badge omitted until a tag is created.
