@@ -65,7 +65,7 @@ object JsonFormUtils : JsonFormUtils() {
         event.apply {
             with(referralLibrary.context.allSharedPreferences()) {
                 providerId = fetchRegisteredANM()
-                locationId = locationId(this)
+                locationId = resolveLocationId(this)
                 childLocationId = fetchCurrentLocality()
                 team = fetchDefaultTeam(providerId)
                 teamId = fetchDefaultTeamId(providerId)
@@ -75,7 +75,7 @@ object JsonFormUtils : JsonFormUtils() {
         }
     }
 
-    private fun locationId(allSharedPreferences: AllSharedPreferences): String {
+    private fun resolveLocationId(allSharedPreferences: AllSharedPreferences): String {
         val providerId = allSharedPreferences.fetchRegisteredANM()
         return allSharedPreferences.fetchUserLocalityId(providerId).also {
             if (StringUtils.isBlank(it)) {

@@ -54,7 +54,7 @@ open class BaseReferralRegisterFragment : BaseRegisterFragment(),
         getSearchView()?.apply {
             getSearchView().setBackgroundResource(R.color.white)
             getSearchView().setCompoundDrawablesWithIntrinsicBounds(
-                R.drawable.ic_action_search, 0, 0, 0
+                org.smartregister.R.drawable.ic_action_search, 0, 0, 0
             )
         }
         // Update sort filter
@@ -67,7 +67,7 @@ open class BaseReferralRegisterFragment : BaseRegisterFragment(),
             ?.apply {
                 visibility = android.view.View.GONE
             }
-        view.findViewById<CustomFontTextView>(R.id.txt_title_label)?.apply {
+        view.findViewById<CustomFontTextView>(org.smartregister.R.id.txt_title_label)?.apply {
             visibility = android.view.View.VISIBLE
             text = getString(R.string.issued_referrals)
             setFontVariant(FontVariant.REGULAR)

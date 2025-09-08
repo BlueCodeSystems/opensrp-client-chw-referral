@@ -2,9 +2,9 @@ package org.smartregister.chw.referral.interactor
 
 import com.google.gson.Gson
 import com.nerdstone.neatformcore.domain.model.NFormViewData
-import org.apache.commons.lang3.text.WordUtils
+import org.apache.commons.text.WordUtils
 import org.json.JSONObject
-import org.koin.core.inject
+import org.koin.core.component.inject
 import org.smartregister.chw.referral.ReferralLibrary
 import org.smartregister.chw.referral.contract.BaseIssueReferralContract
 import org.smartregister.chw.referral.domain.ReferralTask

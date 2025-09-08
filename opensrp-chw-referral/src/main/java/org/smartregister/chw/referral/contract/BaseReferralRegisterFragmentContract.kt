@@ -1,7 +1,7 @@
 package org.smartregister.chw.referral.contract
 
 import org.json.JSONArray
-import org.koin.core.KoinComponent
+import org.koin.core.component.KoinComponent
 import org.smartregister.configurableviews.model.Field
 import org.smartregister.configurableviews.model.RegisterConfiguration
 import org.smartregister.configurableviews.model.ViewConfiguration

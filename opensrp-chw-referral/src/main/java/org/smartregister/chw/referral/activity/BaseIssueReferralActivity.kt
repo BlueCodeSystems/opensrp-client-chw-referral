@@ -15,7 +15,7 @@ import com.nerdstone.neatformcore.domain.builders.FormBuilder
 import com.nerdstone.neatformcore.domain.model.NFormViewData
 import com.nerdstone.neatformcore.form.json.JsonFormBuilder
 import com.nerdstone.neatformcore.form.json.JsonFormEmbedded
-import kotlinx.android.synthetic.main.activity_referral_registration.*
+import org.smartregister.chw.referral.databinding.ActivityReferralRegistrationBinding
 import org.joda.time.DateTime
 import org.joda.time.Period
 import org.json.JSONArray
@@ -61,14 +61,16 @@ open class BaseIssueReferralActivity : AppCompatActivity(), BaseIssueReferralCon
     private var jsonForm: JSONObject? = null
     private val referralLibrary by inject<ReferralLibrary>()
     private var useCustomLayout = false
+    private lateinit var binding: ActivityReferralRegistrationBinding
 
-    protected val locationID: String
+    protected val locationID: String?
         get() = org.smartregister.Context.getInstance().allSharedPreferences()
             .getPreference(AllConstants.CURRENT_LOCATION_ID)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_referral_registration)
+        binding = ActivityReferralRegistrationBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         with(this.intent) {
             baseEntityId = getStringExtra(Constants.ActivityPayload.BASE_ENTITY_ID)
             serviceId = getStringExtra(Constants.ActivityPayload.REFERRAL_SERVICE_IDS)
@@ -76,7 +78,10 @@ open class BaseIssueReferralActivity : AppCompatActivity(), BaseIssueReferralCon
             formName = getStringExtra(Constants.ActivityPayload.REFERRAL_FORM_NAME)
             useCustomLayout = getBooleanExtra(Constants.ActivityPayload.USE_CUSTOM_LAYOUT, false)
             try {
-                jsonForm = JSONObject(getStringExtra(Constants.ActivityPayload.JSON_FORM))
+                val jsonStr = getStringExtra(Constants.ActivityPayload.JSON_FORM)
+                if (!jsonStr.isNullOrBlank()) {
+                    jsonForm = JSONObject(jsonStr)
+                }
             } catch (e: JSONException) {
                 Timber.e(e)
             }
@@ -93,15 +98,15 @@ open class BaseIssueReferralActivity : AppCompatActivity(), BaseIssueReferralCon
 
             with(viewModel?.memberObject!!) {
                 val age = Period(DateTime(this.age), DateTime()).years
-                clientNameTitleTextView.text =
+                binding.clientNameTitleTextView.text =
                     "${this.firstName} ${this.middleName} ${this.lastName}, $age"
 
-                pageTitleTextView.text =
+                binding.pageTitleTextView.text =
                     jsonForm?.getJSONArray("steps")?.getJSONObject(0)?.getString("title")
                         ?: "Referral Form"
             }
 
-            exitFormImageView.setOnClickListener {
+            binding.exitFormImageView.setOnClickListener {
                 if (it.id == R.id.exitFormImageView) {
                     AlertDialog.Builder(this@BaseIssueReferralActivity, R.style.AlertDialogTheme)
                         .setTitle(getString(R.string.confirm_form_close))
@@ -114,7 +119,7 @@ open class BaseIssueReferralActivity : AppCompatActivity(), BaseIssueReferralCon
                 }
             }
 
-            completeButton.setOnClickListener {
+            binding.completeButton.setOnClickListener {
                 if (it.id == R.id.completeButton) {
                     if (formBuilder?.getFormDataAsJson() != "") {
 
@@ -161,7 +166,7 @@ open class BaseIssueReferralActivity : AppCompatActivity(), BaseIssueReferralCon
                 Timber.i("FormBuilder :: Loading form builder")
                 Timber.i("FormBuilder :: loaded json = %s", it)
                 formBuilder = JsonFormBuilder(it.toString(), this)
-                JsonFormEmbedded(formBuilder as JsonFormBuilder, formLayout)
+                JsonFormEmbedded(formBuilder as JsonFormBuilder, binding.formLayout)
                         .buildForm(if (useCustomLayout) customLayouts else null)
             }
 
@@ -192,8 +197,8 @@ open class BaseIssueReferralActivity : AppCompatActivity(), BaseIssueReferralCon
                 .getJSONObject(0)
                 .getJSONArray(JsonFormConstants.FIELDS)
             var referralHealthFacilities: JSONObject? = null
-            for (i in 0 until (fields?.length() ?: 0)) {
-                if (fields!!.getJSONObject(i)
+            for (i in 0 until fields.length()) {
+                if (fields.getJSONObject(i)
                         .getString(JsonFormConstants.NAME) == JsonFormConstants.CHW_REFERRAL_HF
                 ) {
                     referralHealthFacilities = fields.getJSONObject(i)
@@ -214,11 +219,6 @@ open class BaseIssueReferralActivity : AppCompatActivity(), BaseIssueReferralCon
                 healthFacilitiesOptions.add(healthFacilityOption)
             }
             if (referralHealthFacilities != null) {
-                val optionsArray = JSONArray()
-                (0 until referralHealthFacilities.getJSONArray(JsonFormConstants.OPTIONS)
-                    .length()).forEach { i ->
-                    optionsArray.put(referralHealthFacilities.getJSONArray(JsonFormConstants.OPTIONS)[i])
-                }
                 referralHealthFacilities.put(
                     JsonFormConstants.OPTIONS, JSONArray(Gson().toJson(healthFacilitiesOptions))
                 )

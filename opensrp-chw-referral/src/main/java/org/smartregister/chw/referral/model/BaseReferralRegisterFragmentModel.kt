@@ -3,7 +3,7 @@ package org.smartregister.chw.referral.model
 import org.apache.commons.lang3.StringUtils
 import org.json.JSONArray
 import org.json.JSONException
-import org.koin.core.inject
+import org.koin.core.component.inject
 import org.smartregister.chw.referral.ReferralLibrary
 import org.smartregister.chw.referral.contract.BaseReferralRegisterFragmentContract
 import org.smartregister.chw.referral.util.ConfigHelper.defaultRegisterConfiguration

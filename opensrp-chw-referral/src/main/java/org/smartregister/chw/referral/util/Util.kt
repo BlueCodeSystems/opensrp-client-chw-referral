@@ -17,7 +17,7 @@ import androidx.core.content.ContextCompat
 import com.google.gson.Gson
 import com.nerdstone.neatformcore.domain.model.NFormViewData
 import org.json.JSONObject
-import org.koin.core.KoinComponent
+import org.koin.core.component.KoinComponent
 import org.smartregister.chw.referral.R
 import org.smartregister.chw.referral.ReferralLibrary
 import org.smartregister.chw.referral.contract.BaseReferralCallDialogContract
@@ -88,9 +88,9 @@ object Util : KoinComponent {
             false
         }
         else -> {
-            if ((activity.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager).line1Number
-                == null
-            ) {
+            @Suppress("DEPRECATION")
+            val lineNumber = (activity.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager).line1Number
+            if (lineNumber == null) {
                 Timber.i("No dial application so we launch copy to clipboard...")
                 val clipboard =
                     activity.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager

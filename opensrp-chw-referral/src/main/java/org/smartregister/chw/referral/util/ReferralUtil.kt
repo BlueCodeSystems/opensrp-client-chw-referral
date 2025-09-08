@@ -9,6 +9,7 @@ import org.smartregister.chw.referral.domain.ReferralTask
 import org.smartregister.chw.referral.util.Constants.BusinessStatus
 import org.smartregister.chw.referral.util.Constants.Referral
 import org.smartregister.domain.Task
+import org.smartregister.domain.Period as DomainPeriod
 import org.smartregister.repository.BaseRepository
 import java.util.*
 
@@ -38,13 +39,13 @@ object ReferralUtil {
             groupIdentifier = referralTask.groupId
             status = Task.TaskStatus.READY
             businessStatus = BusinessStatus.REFERRED
-            priority = 3
+            priority = Task.TaskPriority.ROUTINE
             code = Referral.CODE
             description = referralTask.referralDescription
             focus = referralTask.focus
             forEntity = referralTask.event.baseEntityId
             val now = DateTime()
-            executionStartDate = now
+            executionPeriod = DomainPeriod(now, now)
             authoredOn = now
             lastModified = now
             reasonReference = referralTask.event.formSubmissionId
@@ -71,32 +72,32 @@ object ReferralUtil {
 
     @JvmStatic
     fun getTranslatedReferralServiceType(context : Context, type: String): String {
-        when(type.toLowerCase(Locale.getDefault())) {
-            Constants.ReferralServiceType.SICK_CHILD.toLowerCase(Locale.getDefault()) -> {
+        when(type.lowercase(Locale.getDefault())) {
+            Constants.ReferralServiceType.SICK_CHILD.lowercase(Locale.getDefault()) -> {
                 return context.getString(R.string.sick_child)
             }
-            Constants.ReferralServiceType.ANC_DANGER_SIGNS.toLowerCase(Locale.getDefault()) -> {
+            Constants.ReferralServiceType.ANC_DANGER_SIGNS.lowercase(Locale.getDefault()) -> {
                 return context.getString(R.string.anc_danger_signs)
             }
-            Constants.ReferralServiceType.PNC_DANGER_SIGNS.toLowerCase(Locale.getDefault()) -> {
+            Constants.ReferralServiceType.PNC_DANGER_SIGNS.lowercase(Locale.getDefault()) -> {
                 return context.getString(R.string.pnc_danger_signs)
             }
-            Constants.ReferralServiceType.FP_SIDE_EFFECTS.toLowerCase(Locale.getDefault()) -> {
+            Constants.ReferralServiceType.FP_SIDE_EFFECTS.lowercase(Locale.getDefault()) -> {
                 return context.getString(R.string.fp_initiation)
             }
-            Constants.ReferralServiceType.SUSPECTED_MALARIA.toLowerCase(Locale.getDefault()) -> {
+            Constants.ReferralServiceType.SUSPECTED_MALARIA.lowercase(Locale.getDefault()) -> {
                 return context.getString(R.string.suspected_malaria)
             }
-            Constants.ReferralServiceType.SUSPECTED_HIV.toLowerCase(Locale.getDefault()) -> {
+            Constants.ReferralServiceType.SUSPECTED_HIV.lowercase(Locale.getDefault()) -> {
                 return context.getString(R.string.suspected_hiv)
             }
-            Constants.ReferralServiceType.SUSPECTED_TB.toLowerCase(Locale.getDefault()) -> {
+            Constants.ReferralServiceType.SUSPECTED_TB.lowercase(Locale.getDefault()) -> {
                 return context.getString(R.string.suspected_tb)
             }
-            Constants.ReferralServiceType.SUSPECTED_GBV.toLowerCase(Locale.getDefault()) -> {
+            Constants.ReferralServiceType.SUSPECTED_GBV.lowercase(Locale.getDefault()) -> {
                 return context.getString(R.string.suspected_gbv)
             }
-            Constants.ReferralServiceType.SUSPECTED_CHILD_GBV.toLowerCase(Locale.getDefault()) -> {
+            Constants.ReferralServiceType.SUSPECTED_CHILD_GBV.lowercase(Locale.getDefault()) -> {
                 return context.getString(R.string.suspected_child_gbv)
             }
         }

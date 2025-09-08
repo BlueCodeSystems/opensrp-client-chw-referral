@@ -1,17 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <data>
-
-        <variable
-            name="viewModel"
-            type="org.smartregister.chw.referral.model.AbstractIssueReferralModel" />
-    </data>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -68,7 +60,7 @@
                         android:layout_marginBottom="56dp"
                         android:paddingBottom="16dp">
                         <LinearLayout
-                            android:id="@+id/mainLayout"
+                            android:id="@+id/content_main_layout"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:animateLayoutChanges="true"
@@ -162,4 +154,3 @@
         </ScrollView>
 
     </RelativeLayout>
-</layout>

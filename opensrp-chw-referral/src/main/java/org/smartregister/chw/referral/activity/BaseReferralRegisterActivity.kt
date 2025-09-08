@@ -40,7 +40,9 @@ open class BaseReferralRegisterActivity : BaseRegisterActivity(),
     override fun startRegistration() = Unit
 
     override fun startFormActivity(formName: String?, entityId: String?, metaData: String?) = Unit
+    override fun startFormActivity(formName: String?, entityId: String?, metaData: Map<String, String>?) = Unit
 
+    @Suppress("DEPRECATION")
     override fun startFormActivity(jsonForm: JSONObject) {
         val intent = Intent(this, BaseReferralRegisterActivity::class.java)
             .putExtra(Constants.JsonFormExtra.JSON, jsonForm.toString())
@@ -59,13 +61,15 @@ open class BaseReferralRegisterActivity : BaseRegisterActivity(),
         bottomNavigationView =
             findViewById(org.smartregister.R.id.bottom_navigation)
         bottomNavigationView?.also {
+            @Suppress("DEPRECATION")
             it.labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_LABELED
             it.menu.removeItem(org.smartregister.R.id.action_clients)
-            it.menu.removeItem(R.id.action_register)
+            it.menu.removeItem(org.smartregister.R.id.action_register)
             it.menu.removeItem(org.smartregister.R.id.action_search)
             it.menu.removeItem(org.smartregister.R.id.action_library)
             it.inflateMenu(menuResource)
             bottomNavigationHelper.disableShiftMode(it)
+            @Suppress("DEPRECATION")
             it.setOnNavigationItemSelectedListener(getBottomNavigation(this))
         }
     }

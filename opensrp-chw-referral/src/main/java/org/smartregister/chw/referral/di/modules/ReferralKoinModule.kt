@@ -1,6 +1,5 @@
 package org.smartregister.chw.referral.di.modules
 
-import id.zelory.compressor.Compressor
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 import org.smartregister.Context
@@ -22,7 +21,6 @@ object ReferralKoinModule {
         single { ReferralLibrary.getInstance() }
         single { Context.getInstance() }
         single { ClientProcessorForJava.getInstance(androidApplication()) }
-        single { Compressor.getDefault(androidApplication()) }
         single { ECSyncHelper.getInstance(androidApplication()) }
         single { TaskRepository(get()) }
         single { TaskNotesRepository() }

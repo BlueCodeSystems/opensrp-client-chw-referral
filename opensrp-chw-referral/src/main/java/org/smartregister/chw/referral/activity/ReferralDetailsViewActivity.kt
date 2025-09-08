@@ -9,6 +9,8 @@ import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import com.google.android.material.appbar.AppBarLayout
 import org.apache.commons.lang3.StringUtils
 import org.joda.time.DateTime
@@ -47,8 +49,15 @@ open class ReferralDetailsViewActivity : SecuredActivity() {
     override fun onCreation() {
         setContentView(R.layout.referral_details_activity)
         inflateToolbar()
-        memberObject =
+        memberObject = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getSerializableExtra(
+                Constants.ReferralMemberObject.MEMBER_OBJECT,
+                MemberObject::class.java
+            )
+        } else {
+            @Suppress("DEPRECATION")
             intent.getSerializableExtra(Constants.ReferralMemberObject.MEMBER_OBJECT) as MemberObject
+        }
         setUpViews()
     }
 
@@ -61,9 +70,12 @@ open class ReferralDetailsViewActivity : SecuredActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.also {
             it.setDisplayHomeAsUpEnabled(true)
-            val upArrow = resources.getDrawable(R.drawable.ic_arrow_back_white_24dp)
-            upArrow.setColorFilter(resources.getColor(R.color.text_blue), PorterDuff.Mode.SRC_ATOP)
-            it.setHomeAsUpIndicator(upArrow)
+            val upArrow = ContextCompat.getDrawable(this, R.drawable.ic_arrow_back_white_24dp)
+            if (upArrow != null) {
+                val wrapped = DrawableCompat.wrap(upArrow.mutate())
+                DrawableCompat.setTint(wrapped, ContextCompat.getColor(this, org.smartregister.R.color.text_blue))
+                it.setHomeAsUpIndicator(wrapped)
+            }
             it.elevation = 0f
         }
         toolbar.setNavigationOnClickListener { finish() }

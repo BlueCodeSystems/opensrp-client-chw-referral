@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.nerdstone.neatformcore.domain.model.NFormViewData
 import org.apache.commons.lang3.tuple.Triple
 import org.json.JSONObject
-import org.koin.core.KoinComponent
+import org.koin.core.component.KoinComponent
 import org.smartregister.chw.referral.domain.MemberObject
 import org.smartregister.domain.Location
 import java.util.*
